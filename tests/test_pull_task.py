@@ -6,6 +6,9 @@ import docker
 from pull_request import PullRequest
 from pull_task import pull_task
 
+configuration_path = os.getenv("CONFIGURATION_PATH")
+if configuration_path is None:
+    configuration_path = "../conf"
 
 class TestSomething(unittest.TestCase):
     def test_hello_world(self):
@@ -14,5 +17,5 @@ class TestSomething(unittest.TestCase):
                               image_tag="11",
                               image_digest="sha256:c0508353648d7db3c313661409ca41a2d12c63a4d06007387679161a8372329f",
                               container_name="hello-world")
-        pull_task(docker_client, "../conf", request)
+        pull_task(docker_client, configuration_path, request)
         docker_client.close()

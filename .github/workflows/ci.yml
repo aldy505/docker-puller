@@ -20,3 +20,5 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run test
         run: PYTHONPATH=${PYTHONPATH}:$(pwd)/src python3 -m unittest discover tests
+        env:
+          CONFIGURATION_PATH: conf
