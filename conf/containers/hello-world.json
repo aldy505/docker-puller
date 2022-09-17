@@ -1,0 +1,38 @@
+{
+  "hostname": "hello-world",
+  "image": "debian:11",
+  "command": "echo 'Hello world!'",
+  "network": "default",
+  "ports": {
+    "8000": ["127.0.0.1", "8000"]
+  },
+  "restart_policy": {
+    "name": "on-failure",
+    "maximum_retry_count": 10
+  },
+  "environment": {
+    "DEBIAN_NONINTERACTIVE": "true"
+  },
+  "volumes": {},
+  "healthcheck": {
+    "test": "echo 'Hello world'",
+    "interval": 15000000000,
+    "timeout": 10000000000,
+    "retries": 5,
+    "start_period": 30000000000
+  },
+  "labels": {},
+  "log_config": {
+    "driver": "json-file",
+    "options": {
+      "max-size": "10m",
+      "max-file": "3"
+    }
+  },
+  "cap_add": [],
+  "cap_drop": [],
+  "cpu_cpus": "",
+  "cpu_mem": "",
+  "memory_limit": "",
+  "memory_reservation": ""
+}
