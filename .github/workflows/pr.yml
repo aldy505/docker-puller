@@ -1,24 +1,34 @@
-name: CI
+name: PR
 
 on:
   pull_request:
-  push:
 
 jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
-    timeout-minutes: 120
     container:
       image: python:3.10-bullseye
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Install dependencies
         run: pip install -r requirements.txt
+
       - name: Run test
         run: PYTHONPATH=${PYTHONPATH}:$(pwd)/src python3 -m unittest discover tests
         env:
           CONFIGURATION_PATH: conf
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: python
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+      - uses: codecov/codecov-action@v3
